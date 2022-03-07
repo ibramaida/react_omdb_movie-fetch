@@ -1,25 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import MovieCard from "./MovieCard";
 
-function App() {
+import "./App.css";
+
+// f0065335
+const API_URL = "https://www.omdbapi.com?apikey=f0065335";
+
+const App = () => {
+  const [movies, setMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const fetchMovies = async (title) => {
+    const response = await fetch(`${API_URL}&s=${title}`);
+    const data = await response.json();
+    console.log(data.Search);
+    setMovies(data.Search);
+    setSearchTerm("");
+  };
+
+  useEffect(() => {
+    fetchMovies("");
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="app__container">
+      <h1 className="movie-info">Movie Info</h1>
+      <div className="app__search">
+        <input
+          type="text"
+          value={searchTerm}
+          placeholder="Search your movie"
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            fetchMovies(searchTerm);
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          Search
+        </button>
+      </div>
+      <div className="app__cards">
+        {movies?.length > 0 ? (
+          movies.map((movie) => <MovieCard key={movie.imdbID} movie={movie} />)
+        ) : (
+          <div className="empty">movie not found</div>
+        )}
+      </div>
     </div>
   );
-}
+};
 
 export default App;

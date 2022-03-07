@@ -1,0 +1,30 @@
+.card {
+  width: 320px;
+  aspect-ratio: 1 / 1.5;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #444;
+}
+
+.card img {
+  width: 100%;
+  aspect-ratio: 1 / 1.1;
+  object-fit: cover;
+}
+
+.card-text {
+  padding-inline: 1rem;
+}
+
+.card-text h2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-block-end: 1rem;
+}
+.card-text p {
+  color: gray;
+}
